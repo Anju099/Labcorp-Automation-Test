@@ -6,9 +6,16 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = "src/test/resources/features",
-    glue = "stepDefinitions",
-    plugin = {"pretty", "html:target/cucumber-reports.html"}
+        features = "src/test/resources/features",
+        glue = "stepDefinitions",
+        tags = "@LabcorpTest",
+        plugin = {
+                "pretty",
+                "html:target/cucumber-report.html",
+                "json:target/cucumber.json",
+                "junit:target/cucumber.xml"
+        },
+        monochrome = true // Console output ko saaf rakhne ke liye
 )
 public class TestRunner {
 }

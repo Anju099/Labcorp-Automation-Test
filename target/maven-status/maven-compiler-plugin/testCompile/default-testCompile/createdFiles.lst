@@ -1,8 +1,11 @@
-stepDefinitions\Hooks.class
-pages\JobDetailsPage.class
+api\runners\ApiTestRunner.class
 utils\BaseTest.class
 pages\HomePage.class
-stepDefinitions\JobSearchSteps.class
 runners\TestRunner.class
 pages\ApplyPage.class
+stepDefinitions\Hooks.class
+pages\JobDetailsPage.class
+api\utils\ApiClient.class
+stepDefinitions\JobSearchSteps.class
+api\stepDefinitions\ApiSteps.class
 pages\CareersPage.class

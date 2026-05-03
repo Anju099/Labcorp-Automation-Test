@@ -17,7 +17,7 @@ public class CareersPage {
     private By searchInput = By.xpath("//input[@id='typehead']");
 
     // Job card by title and job id
-    public By jobCard(String jobTitle, String jobId) {
+    public By jobCard(String jobTitle, String jobId, String jobLocation) {
         return By.xpath("//a[@aria-label='Lead Software QA Analyst Job ID is 265600' and 'Durham, North Carolina, United States of America']");
     }
 
@@ -97,8 +97,8 @@ public class CareersPage {
         }
     }
 
-    public void selectJob(String jobTitle, String jobId) {
-        WebElement job = wait.until(ExpectedConditions.elementToBeClickable(jobCard(jobTitle, jobId)));
+    public void selectJob(String jobTitle, String jobId, String jobLocation) {
+        WebElement job = wait.until(ExpectedConditions.elementToBeClickable(jobCard(jobTitle, jobId, jobLocation)));
         job.click();
     }
     

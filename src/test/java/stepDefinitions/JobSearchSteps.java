@@ -50,12 +50,13 @@ public class JobSearchSteps {
         careersPage.searchPosition(position);
     }
 
-    @When("I select the job listing")
+    @When("I select the job listing with expected job ID- 265600 Job Title- Lead Software QA Analyst and jobLocation- United States of America")
     public void selectJob() {
         // Use values from the feature file for job title and job id
         String jobTitle = "Lead Software QA Analyst";
         String jobId = "265600";
-        careersPage.selectJob(jobTitle, jobId);
+        String location = "265600";
+        careersPage.selectJob(jobTitle, jobId, location);
     }
 
     @Then("I verify the job title is {string}")

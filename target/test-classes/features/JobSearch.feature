@@ -1,10 +1,11 @@
 Feature: LabCorp Job Search Automation
 
+  @LabcorpTestUi
   Scenario: Browse to a job listing and verify details
     Given I open the browser to www.labcorp.com
     When I click on the Careers link
     And I search for the position "Lead Software QA Analyst"
-    And I select the job listing
+    And I select the job listing with expected job ID- 265600 Job Title- Lead Software QA Analyst and jobLocation- United States of America
     Then I verify the job title is "Lead Software QA Analyst"
    #And I verify the job location is "United States of America"
    # And I verify the job ID is "265600"
