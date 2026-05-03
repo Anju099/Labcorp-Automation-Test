@@ -3,8 +3,12 @@ package stepDefinitions;
 import io.cucumber.java.en.*;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.*;
 import utils.BaseTest;
+
+import java.util.List;
 
 public class JobSearchSteps {
     private WebDriver driver;
@@ -55,7 +59,7 @@ public class JobSearchSteps {
         // Use values from the feature file for job title and job id
         String jobTitle = "Lead Software QA Analyst";
         String jobId = "265600";
-        String location = "265600";
+        String location = "Durham, North Carolina, United States of America";
         careersPage.selectJob(jobTitle, jobId, location);
     }
 
@@ -64,14 +68,22 @@ public class JobSearchSteps {
         Assert.assertEquals(expected, jobDetailsPage.getJobTitle());
     }
 
-    @And("I verify the job location is {string}")
-    public void verifyJobLocation(String expected) {
-        Assert.assertEquals(expected, jobDetailsPage.getJobLocation());
+    @Then("I verify the job location is {string} and {string}")
+    public void verifyJobLocations(String expectedLoc1, String expectedLoc2) {
+        jobDetailsPage.clickSeeAllLocationsIfPresent();
+        List<String> actualLocations = jobDetailsPage.getAllJobLocations();
+        Assert.assertTrue("Location 1 not found: " + expectedLoc1,
+                actualLocations.stream().anyMatch(loc -> loc.contains(expectedLoc1)));
+        Assert.assertTrue("Location 2 not found: " + expectedLoc2,
+                actualLocations.stream().anyMatch(loc -> loc.contains(expectedLoc2)));
+        jobDetailsPage.closeButton();
     }
 
-    @And("I verify the job ID is {string}")
-    public void verifyJobId(String expected) {
-        Assert.assertEquals(expected, jobDetailsPage.getJobId());
+    @Then("I verify the job ID is {string}")
+    public void verifyJobId(String expectedJobId) {
+        String actualJobId = jobDetailsPage.getJobId();
+        Assert.assertTrue("Expected Job ID: " + expectedJobId + ", but found: " + actualJobId,
+                actualJobId.contains(expectedJobId));
     }
 
     @And("I verify the first sentence of the JD under Responsibilities is {string}")

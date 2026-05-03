@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="68.131" tests="1" skipped="0" failures="0" errors="0">
-<testcase classname="LabCorp Job Search Automation" name="Browse to a job listing and verify details" time="67.932">
+<testsuite name="Cucumber" time="72.51" tests="1" skipped="0" failures="0" errors="0">
+<testcase classname="LabCorp Job Search Automation" name="Browse to a job listing and verify details" time="72.217">
 <system-out><![CDATA[
 Given I open the browser to www.labcorp.com.................................passed
 When I click on the Careers link............................................passed
 And I search for the position "Lead Software QA Analyst"....................passed
 And I select the job listing with expected job ID- 265600 Job Title- Lead Software QA Analyst and jobLocation- United States of America.passed
 Then I verify the job title is "Lead Software QA Analyst"...................passed
+And I verify the job location is "Durham, North Carolina, United States of America" and "Burlington, North Carolina, United States of America".passed
+And I verify the job ID is "265600".........................................passed
 And I verify the first sentence of the JD under Responsibilities is "Senior QA resource for project teams providing solid technical leadership and support".passed
 And I verify the second bullet point under Minimum Qualifications is "6 or more years’ experience in Software Quality Assurance".passed
 And I verify the third point under Preferred Qualifications is "1 or more years' Clinical background experience.".passed

@@ -7,11 +7,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class JobDetailsPage {
     private WebDriver driver;
     private WebDriverWait wait;
+
+    // Locator for "See all" link
+    private By seeAllLocationsLink = By.xpath("//button[contains(text(),'See all')]");
+    // Locator for job locations in the popup
+    private By locationList = By.xpath("//div[contains(@class,'modal')]//li");
+
+
 
     // Job Title - Multiple fallback strategies
     private By jobTitle1 = By.id("job-title");
@@ -28,15 +37,15 @@ public class JobDetailsPage {
     
     // Description - Multiple fallback strategies
     private By descriptionText1 = By.xpath("//ul/li//p[text()='Senior QA resource for project teams providing solid technical leadership and support.']");
-    private By descriptionText2 = By.xpath("//div[contains(@class, 'description')]//p[3]");
+
     
     // Management Support - Multiple fallback strategies
     private By managementSupportBullet1 = By.xpath("//li[contains(., '6 or more years') and contains(., 'experience')]");
-    private By managementSupportBullet2 = By.xpath("//ul[contains(@class, 'management')]//li[2]");
+
     
     // Requirements - Multiple fallback strategies
     private By requirementsBullet1 = By.xpath("//li[contains(., '1 or more years') and contains(., 'Clinical background experience')]");
-    private By requirementsBullet2 = By.xpath("//ul[contains(@class, 'requirements')]//li[3]");
+
     
     // Apply Now Button - Multiple fallback strategies
     private By applyNowButton1 = By.cssSelector("button.apply-now");
@@ -44,6 +53,38 @@ public class JobDetailsPage {
     private By applyNowButton3 = By.xpath("//button[contains(@class, 'apply')]");
 
     private By applyJobTitle2 = By.xpath("//div//h3[text()='Lead Software QA Analyst']");
+
+    private By closeButton = By.xpath("//div[@class='popup-content-block']//button/i[@class='icon icon-cancel']");
+
+
+
+
+    public void clickSeeAllLocationsIfPresent() {
+        List<WebElement> seeAll = driver.findElements(seeAllLocationsLink);
+        if (!seeAll.isEmpty()) {
+            seeAll.get(0).click();
+        }
+    }
+
+    public List<String> getAllJobLocations() {
+        // Wait for modal if needed (add explicit wait if your framework supports)
+        List<WebElement> locations = driver.findElements(locationList);
+        return locations.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    public String getJobId() {
+
+        WebElement jobIdElement = driver.findElement(By.className("jobId"));
+
+
+        String fullText = jobIdElement.getText();
+
+
+        String cleanId = fullText.replace("Job ID :", "").trim();
+
+        System.out.println("Final Job ID: " + cleanId);
+        return cleanId;
+    }
 
     public JobDetailsPage(WebDriver driver) {
         this.driver = driver;
@@ -60,25 +101,25 @@ public class JobDetailsPage {
         return trySafeGetText("Job Location", jobLocation1, jobLocation2);
     }
 
-    public String getJobId() {
-        System.out.println("\n=== GETTING JOB ID ===");
-        return trySafeGetText("Job ID", jobId1, jobId2);
+    public void closeButton() {
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(closeButton));
+        element.click();
     }
 
     public String getDescriptionText() {
         System.out.println("\n=== GETTING DESCRIPTION TEXT ===");
-        String fullText = trySafeGetText("Description", descriptionText1, descriptionText2);
+        String fullText = trySafeGetText("Description", descriptionText1);
         return fullText.split("\\.")[0];
     }
 
     public String getManagementSupportBullet() {
         System.out.println("\n=== GETTING MANAGEMENT SUPPORT BULLET ===");
-        return trySafeGetText("Management Support", managementSupportBullet1, managementSupportBullet2);
+        return trySafeGetText("Management Support", managementSupportBullet1);
     }
 
     public String getRequirementsBullet() {
         System.out.println("\n=== GETTING REQUIREMENTS BULLET ===");
-        return trySafeGetText("Requirements", requirementsBullet1, requirementsBullet2);
+        return trySafeGetText("Requirements", requirementsBullet1);
     }
 
     public void clickApplyNow() {
@@ -132,7 +173,6 @@ public class JobDetailsPage {
                 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
                 Thread.sleep(500);
                 element.click();
-                //String title = wait.until(ExpectedConditions.visibilityOfElementLocated(applyJobTitle2)).getText();
                 return true;
             }
         } catch (Exception e) {
