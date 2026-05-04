@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
                 "json:target/cucumber.json",
                 "junit:target/cucumber.xml"
         },
-        monochrome = true // Console output ko saaf rakhne ke liye
+        monochrome = true
 )
 public class TestRunner {
 }

@@ -25,7 +25,7 @@ public class JobDetailsPage {
     private By responsibilitiesText = By.xpath("//ul/li//p[text()='Senior QA resource for project teams providing solid technical leadership and support.']");
     private By minimumQualificationsText = By.xpath("//li[contains(., '6 or more years') and contains(., 'experience')]");
     private By preferredQualificationsText= By.xpath("//li[contains(., '1 or more years') and contains(., 'Clinical background experience')]");
-    private By applyNowButton2 = By.xpath("//ppc-content[contains(text(), \"Apply Now\")]");
+    private By applyNowButton = By.xpath("//ppc-content[contains(text(), \"Apply Now\")]");
     private By closeButton = By.xpath("//div[@class='popup-content-block']//button/i[@class='icon icon-cancel']");
 
     public void clickSeeAllLocationsIfPresent() {
@@ -36,7 +36,6 @@ public class JobDetailsPage {
     }
 
     public List<String> getAllJobLocations() {
-        // Wait for modal if needed (add explicit wait if your framework supports)
         List<WebElement> locations = driver.findElements(locationList);
         return locations.stream().map(WebElement::getText).collect(Collectors.toList());
     }
@@ -87,7 +86,7 @@ public class JobDetailsPage {
 
     public void clickApplyNow() {
         System.out.println("\n=== CLICKING APPLY NOW ===");
-        if (tryClickElement(applyNowButton2)) {
+        if (tryClickElement(applyNowButton)) {
             System.out.println("✓ Clicked using applyNowButton2");
             return;
         }

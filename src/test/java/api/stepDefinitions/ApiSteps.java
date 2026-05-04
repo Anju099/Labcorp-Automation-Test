@@ -36,7 +36,6 @@ public class ApiSteps {
         apiClient.sendGetRequest();
     }
 
-    // New: Handle POST request with JSON doc string payload (Isse fix kiya hai)
     @When("I send the POST request with query parameter {string} as {string} and the following payload:")
     public void sendPostRequestWithJsonPayload(String paramKey, String paramValue, String docStringPayload) throws IOException {
         System.out.println("Adding query parameter: " + paramKey + " = " + paramValue);
@@ -76,7 +75,6 @@ public class ApiSteps {
     @Then("the POST request's response should contain the following fields and values:")
     public void verifyResponseFieldsAndValues(io.cucumber.datatable.DataTable dataTable) {
         String responseString = apiClient.getResponseBody();
-        // DataTable ko map mein convert karte hain
         Map<String, String> expectedData = dataTable.asMap(String.class, String.class);
 
         System.out.println("--- Starting Validation for 15 Fields ---");

@@ -22,10 +22,7 @@ public class HomePage {
     }
 
     public void clickCareers() {
-        // Strategy 1: Try finding and clicking with visibility wait
         if (tryClickLocator(careersLink)) return;
-
-        // Strategy 2: If all else fails, print all links for debugging
         printAllLinks();
         throw new RuntimeException("Could not find and click Careers link. Check console for available links.");
     }
