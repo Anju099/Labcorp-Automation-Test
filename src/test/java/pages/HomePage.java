@@ -14,6 +14,8 @@ public class HomePage {
     private WebDriverWait wait;
 
     private By careersLink = By.linkText("Careers");
+    private By acceptCookiesButton = By.xpath("//button[contains(text(), 'Accept All Cookies')]");
+    private By cookiePopup = By.xpath("//div[contains(@class, 'cookie') or contains(text(), 'Cookie Notice')]");
 
 
     public HomePage(WebDriver driver) {
@@ -22,9 +24,33 @@ public class HomePage {
     }
 
     public void clickCareers() {
+        // Handle cookie popup before clicking Careers link
+        dismissCookiePopup();
+        
         if (tryClickLocator(careersLink)) return;
         printAllLinks();
         throw new RuntimeException("Could not find and click Careers link. Check console for available links.");
+    }
+
+    public void dismissCookiePopup() {
+        try {
+            // Wait for cookie popup to appear and click "Accept All Cookies"
+            List<WebElement> buttons = wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(acceptCookiesButton)
+            );
+            
+            if (!buttons.isEmpty()) {
+                WebElement acceptButton = buttons.get(0);
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", acceptButton);
+                Thread.sleep(500);
+                acceptButton.click();
+                System.out.println("Cookie popup dismissed successfully.");
+                // Wait for popup to close
+                Thread.sleep(1000);
+            }
+        } catch (Exception e) {
+            System.out.println("Cookie popup not found or already dismissed: " + e.getMessage());
+        }
     }
 
     private boolean tryClickLocator(By locator) {
