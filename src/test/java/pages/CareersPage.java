@@ -14,7 +14,7 @@ public class CareersPage {
     private WebDriverWait wait;
 
     // Search input by placeholder
-    private By searchInput = By.xpath("//input[@id='typehead']");
+    private By searchInput = By.id("typehead");
 
     // Job card by title and job id
     public By jobCard(String jobTitle, String jobId, String jobLocation) {
@@ -31,8 +31,6 @@ public class CareersPage {
         input.clear();
         input.sendKeys(position);
         input.sendKeys(org.openqa.selenium.Keys.ENTER);
-        // Wait for results to update
-        //wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//h1|//h2"), position));
     }
     
     private boolean tryFillInput(By locator, String text) {

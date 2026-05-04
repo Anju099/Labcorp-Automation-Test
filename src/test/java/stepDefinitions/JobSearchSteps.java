@@ -122,10 +122,6 @@ public class JobSearchSteps {
         Assert.assertEquals(expected, applyPage.getApplyJobId());
     }
 
-    @And("I verify the automation tool suggestion contains {string}")
-    public void verifyAutomationTool(String expected) {
-        Assert.assertTrue(applyPage.getAutomationTool().contains(expected));
-    }
 
     @When("I click to Return to Job Search")
     public void clickReturnToSearch() {

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: api.runners.ApiTestRunner
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.461 s -- in api.runners.ApiTestRunner
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.477 s -- in api.runners.ApiTestRunner

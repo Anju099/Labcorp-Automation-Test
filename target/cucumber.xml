@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="72.51" tests="1" skipped="0" failures="0" errors="0">
-<testcase classname="LabCorp Job Search Automation" name="Browse to a job listing and verify details" time="72.217">
+<testsuite name="Cucumber" time="32.927" tests="1" skipped="0" failures="0" errors="0">
+<testcase classname="LabCorp Job Search Automation" name="Browse to a job listing and verify details" time="32.716">
 <system-out><![CDATA[
 Given I open the browser to www.labcorp.com.................................passed
 When I click on the Careers link............................................passed

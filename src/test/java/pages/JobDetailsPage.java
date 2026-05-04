@@ -20,44 +20,13 @@ public class JobDetailsPage {
     // Locator for job locations in the popup
     private By locationList = By.xpath("//div[contains(@class,'modal')]//li");
 
-
-
-    // Job Title - Multiple fallback strategies
-    private By jobTitle1 = By.id("job-title");
-    private By jobTitle2 = By.xpath("//h1");
-    private By jobTitle3 = By.xpath("//*[contains(@class, 'title')]");
-    
-    // Location - Multiple fallback strategies
-    private By jobLocation1 = By.xpath("//span[@class='location']");
-    private By jobLocation2 = By.xpath("//span[contains(@class, 'location')]");
-    
-    // Job ID - Multiple fallback strategies
-    private By jobId1 = By.cssSelector(".job-id");
-    private By jobId2 = By.xpath("//*[contains(@class, 'job-id')]");
-    
-    // Description - Multiple fallback strategies
-    private By descriptionText1 = By.xpath("//ul/li//p[text()='Senior QA resource for project teams providing solid technical leadership and support.']");
-
-    
-    // Management Support - Multiple fallback strategies
-    private By managementSupportBullet1 = By.xpath("//li[contains(., '6 or more years') and contains(., 'experience')]");
-
-    
-    // Requirements - Multiple fallback strategies
-    private By requirementsBullet1 = By.xpath("//li[contains(., '1 or more years') and contains(., 'Clinical background experience')]");
-
-    
-    // Apply Now Button - Multiple fallback strategies
-    private By applyNowButton1 = By.cssSelector("button.apply-now");
+    private By jobTitle = By.xpath("//h1");
+    private By jobLocation = By.xpath("//span[@class='location']");
+    private By responsibilitiesText = By.xpath("//ul/li//p[text()='Senior QA resource for project teams providing solid technical leadership and support.']");
+    private By minimumQualificationsText = By.xpath("//li[contains(., '6 or more years') and contains(., 'experience')]");
+    private By preferredQualificationsText= By.xpath("//li[contains(., '1 or more years') and contains(., 'Clinical background experience')]");
     private By applyNowButton2 = By.xpath("//ppc-content[contains(text(), \"Apply Now\")]");
-    private By applyNowButton3 = By.xpath("//button[contains(@class, 'apply')]");
-
-    private By applyJobTitle2 = By.xpath("//div//h3[text()='Lead Software QA Analyst']");
-
     private By closeButton = By.xpath("//div[@class='popup-content-block']//button/i[@class='icon icon-cancel']");
-
-
-
 
     public void clickSeeAllLocationsIfPresent() {
         List<WebElement> seeAll = driver.findElements(seeAllLocationsLink);
@@ -73,15 +42,9 @@ public class JobDetailsPage {
     }
 
     public String getJobId() {
-
         WebElement jobIdElement = driver.findElement(By.className("jobId"));
-
-
         String fullText = jobIdElement.getText();
-
-
         String cleanId = fullText.replace("Job ID :", "").trim();
-
         System.out.println("Final Job ID: " + cleanId);
         return cleanId;
     }
@@ -93,12 +56,12 @@ public class JobDetailsPage {
 
     public String getJobTitle() {
         System.out.println("\n=== GETTING JOB TITLE ===");
-        return trySafeGetText("Job Title", jobTitle1, jobTitle2, jobTitle3);
+        return trySafeGetText("Job Title", jobTitle);
     }
 
     public String getJobLocation() {
         System.out.println("\n=== GETTING JOB LOCATION ===");
-        return trySafeGetText("Job Location", jobLocation1, jobLocation2);
+        return trySafeGetText("Job Location", jobLocation);
     }
 
     public void closeButton() {
@@ -108,32 +71,24 @@ public class JobDetailsPage {
 
     public String getDescriptionText() {
         System.out.println("\n=== GETTING DESCRIPTION TEXT ===");
-        String fullText = trySafeGetText("Description", descriptionText1);
+        String fullText = trySafeGetText("Description", responsibilitiesText);
         return fullText.split("\\.")[0];
     }
 
     public String getManagementSupportBullet() {
         System.out.println("\n=== GETTING MANAGEMENT SUPPORT BULLET ===");
-        return trySafeGetText("Management Support", managementSupportBullet1);
+        return trySafeGetText("Management Support", minimumQualificationsText);
     }
 
     public String getRequirementsBullet() {
         System.out.println("\n=== GETTING REQUIREMENTS BULLET ===");
-        return trySafeGetText("Requirements", requirementsBullet1);
+        return trySafeGetText("Requirements", preferredQualificationsText);
     }
 
     public void clickApplyNow() {
         System.out.println("\n=== CLICKING APPLY NOW ===");
-        if (tryClickElement(applyNowButton1)) {
-            System.out.println("✓ Clicked using applyNowButton1");
-            return;
-        }
         if (tryClickElement(applyNowButton2)) {
             System.out.println("✓ Clicked using applyNowButton2");
-            return;
-        }
-        if (tryClickElement(applyNowButton3)) {
-            System.out.println("✓ Clicked using applyNowButton3");
             return;
         }
         System.out.println("✗ Could not find Apply Now button");
@@ -143,7 +98,6 @@ public class JobDetailsPage {
     public void switchToNewWindow() {
         String mainWindow = driver.getWindowHandle();
         Set<String> allWindows = driver.getWindowHandles();
-
         for (String window : allWindows) {
             if (!window.equals(mainWindow)) {
                 driver.switchTo().window(window);
@@ -181,4 +135,3 @@ public class JobDetailsPage {
         return false;
     }
 }
-

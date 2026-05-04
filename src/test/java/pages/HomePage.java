@@ -13,12 +13,8 @@ public class HomePage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Multiple locator strategies
-    private By careersLink1 = By.xpath("//a[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'careers')]");
-    private By careersLink2 = By.xpath("//a[normalize-space()='Careers']");
-    private By careersLink3 = By.linkText("Careers");
-    private By careersLink4 = By.xpath("//a[@href and contains(@href, 'career')]");
-    private By careersLink5 = By.xpath("//*[contains(text(), 'Careers')]");
+    private By careersLink = By.linkText("Careers");
+
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -27,12 +23,8 @@ public class HomePage {
 
     public void clickCareers() {
         // Strategy 1: Try finding and clicking with visibility wait
-        if (tryClickLocator(careersLink1)) return;
-        if (tryClickLocator(careersLink2)) return;
-        if (tryClickLocator(careersLink3)) return;
-        if (tryClickLocator(careersLink4)) return;
-        if (tryClickLocator(careersLink5)) return;
-        
+        if (tryClickLocator(careersLink)) return;
+
         // Strategy 2: If all else fails, print all links for debugging
         printAllLinks();
         throw new RuntimeException("Could not find and click Careers link. Check console for available links.");
